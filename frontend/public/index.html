@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semal Studio Present 𝓼𝓼ῥ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">𝓼𝓼ῥ📸 Semal Studio</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#contact" class="btn-3d" style="padding: 5px 15px; font-size: 0.8rem;">Book Now</a></li>
+        </ul>
+    </nav>
+
+    <!-- 1. HOME SECTION -->
+    <section id="home">
+        <h1>Capturing Life's <br> <span style="color:#00d2ff">Magic Moments</span></h1>
+        <p>Professional Wedding Photography, Cinematic Videography & Event Coverage.</p>
+        <div>
+            <a href="#packages" class="btn-3d">View Packages</a>
+            <a href="#contact" class="btn-3d" style="background: transparent; border: 2px solid white; margin-left: 10px;">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- 2. ABOUT SECTION -->
+    <section id="about">
+        <h2 class="section-title">About The Studio</h2>
+        <div class="about-content">
+            <img src="assets/images/1000225380.jpeg" class="about-img" alt="Semal Bhargava">
+            <div class="about-text">
+                <h3>Semal Bhargava</h3>
+                <p style="color: #ccc; margin-top: 10px; line-height: 1.6;">
+                    With over 5 years of experience, we specialize in turning your special moments into timeless memories. 
+                    Whether it's a grand Indian wedding or an intimate birthday celebration, our team uses the latest 
+                    cameras and drone technology to deliver cinematic quality.
+                </p>
+                <div style="margin-top: 20px; display: flex; gap: 20px; justify-content: center;">
+                    <div><h3 style="color:var(--primary)">500+</h3><span style="font-size:0.8rem">Events</span></div>
+                    <div><h3 style="color:var(--accent)">100%</h3><span style="font-size:0.8rem">Satisfaction</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. GALLERY SECTION -->
+    <section id="gallery">
+        <h2 class="section-title">Our Portfolio</h2>
+        <div class="grid">
+            <div class="gallery-item"><img src="https://media.istockphoto.com/id/866987706/photo/indian-wedding-hands.jpg?s=612x612&w=0&k=20&c=6L-u9qhFPv9MjDnF4UK4AqjVbDKM4_8Xad72IHhwPZE=" alt="Wedding"></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/originals/d0/45/23/d0452398615be39dcd075a79c32a63cb.jpg" alt="Bride"></div>
+            <div class="gallery-item"><img src="https://t4.ftcdn.net/jpg/01/83/48/51/360_F_183485123_7QykgFtQfdvfrMQ4bmHy94Zp8TInGbAD.jpg" alt="Groom"></div>
+            <div class="gallery-item"><img src="https://photopoets.b-cdn.net/wp-content/uploads/2021/05/6959401666e37d9b51c223b1324bdb60.jpeg" alt="Shoot"></div>
+            <div class="gallery-item"><img src="https://www.shaadidukaan.com/vogue/wp-content/uploads/2025/09/Best-Wedding-Photographers-_-Razz-Films-and-Photography-_-Portfolio-1.jpg" alt="Couple"></div>
+            <div class="gallery-item"><img src="https://thumbs.dreamstime.com/b/kids-celebrating-birthday-party-blowing-group-joyful-little-candles-cake-holidays-concept-48869522.jpg" alt="Event"></div>
+        </div>
+    </section>
+
+    <!-- 4. PACKAGES SECTION -->
+    <section id="packages">
+        <h2 class="section-title">Select Your Plan</h2>
+        <div class="grid" id="pkg-container">
+            <!-- Loaded via JS -->
+            <p>Loading Packages...</p>
+        </div>
+    </section>
+
+    <!-- 5. CONTACT / BOOKING SECTION -->
+    <section id="contact">
+        <h2 class="section-title">Book Your Date</h2>
+        <div class="form-box">
+            <form id="bookingForm">
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+                
+                <label>Mobile Number</label>
+                <input type="tel" id="mobile" placeholder="Enter mobile number" required>
+                
+                <label>Event Date</label>
+                <input type="date" id="event_date" required>
+                
+                <label>Event Type</label>
+                <select id="event_type">
+                    <option>Wedding</option>
+                    <option>Engagement</option>
+                    <option>Birthday</option>
+                    <option>Pre-Wedding Shoot</option>
+                </select>
+                
+                <label>Selected Package</label>
+                <input type="text" id="package" placeholder="Select a package above" readonly>
+                
+                <button type="button" class="btn-3d" style="width:100%; margin-top:20px;" onclick="showOtp()">Proceed to Verify</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding: 20px; background: rgba(0,0,0,0.5); margin-top: 50px;">
+        <p> © 2025 Semal Studio All Rights Reserved | Designed by LPWP_Creation</p>
+    </footer>
+
+    <!-- OTP Modal -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <h3>🔐 Phone Verification</h3>
+            <p style="margin: 10px 0; color: #ccc;">Enter OTP sent to mobile<br>(Demo: <strong>0773</strong>)</p>
+            <input type="text" id="otpInput" maxlength="4" style="text-align:center; font-size:2rem; letter-spacing:10px; width: 80%;">
+            <p id="error" style="color:#ff4444; display:none; margin-top:5px;">❌ Wrong OTP!</p>
+            <button class="btn-3d" style="margin-top: 15px; width: 100%;" onclick="verifyOtp()">Confirm Booking</button>
+            <button class="btn-3d" style="background:transparent; border:1px solid #ccc; margin-top:10px; width: 100%;" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

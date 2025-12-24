@@ -1,0 +1,211 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary: #ff00cc;
+    --secondary: #333399;
+    --accent: #00d2ff;
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --dark-bg: #0f0c29;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+
+body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
+    overflow-x: hidden; /* Phone par side scroll na ho */
+    min-height: 100vh;
+}
+
+/* --- ANIMATED BACKGROUND --- */
+.bg-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: float 10s infinite alternate;
+}
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); }
+.blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--secondary); animation-delay: 2s;}
+.blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: var(--accent); animation-delay: 4s;}
+
+@keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(20px, 40px); } }
+
+/* --- NAVIGATION --- */
+nav {
+    background: rgba(15, 12, 41, 0.8);
+    backdrop-filter: blur(15px);
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+nav .logo { 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    background: linear-gradient(to right, var(--accent), var(--primary)); 
+    -webkit-background-clip: text; 
+    color: transparent; 
+}
+
+nav ul { list-style: none; display: flex; gap: 20px; }
+nav a { text-decoration: none; color: white; font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+
+/* Mobile Menu Button (Hidden on Desktop) */
+.menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+/* --- SECTIONS --- */
+section {
+    padding: 80px 20px;
+    min-height: 100vh; /* Har section full screen lage */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+.section-title::after {
+    content: '';
+    width: 60%;
+    height: 4px;
+    background: var(--accent);
+    display: block;
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+/* --- HERO SECTION --- */
+#home { text-align: center; height: 100vh; }
+#home h1 { font-size: 4rem; line-height: 1.2; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+#home p { font-size: 1.2rem; margin: 20px 0 40px; color: #ddd; max-width: 600px; }
+
+/* --- BUTTONS --- */
+.btn-3d {
+    padding: 12px 35px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 0, 204, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-3d:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 30px rgba(255, 0, 204, 0.6); }
+
+/* --- ABOUT SECTION --- */
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 1000px;
+}
+.about-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 2px solid var(--accent);
+}
+.about-text { max-width: 500px; text-align: left; }
+
+/* --- GRID SYSTEM (Gallery & Packages) --- */
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px; 
+    width: 100%; 
+    max-width: 1200px; 
+}
+
+/* --- CARDS (Packages & Features) --- */
+.card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+.card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 15px 30px rgba(0, 210, 255, 0.2); }
+.card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+.card .price { font-size: 2.2rem; font-weight: bold; color: var(--accent); margin: 15px 0; }
+
+/* --- GALLERY IMAGES --- */
+.gallery-item {
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+}
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.gallery-item:hover img { transform: scale(1.1); }
+
+/* --- CONTACT / BOOKING FORM --- */
+.form-box {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(0,0,0,0.4);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+input:focus { border-color: var(--primary); }
+
+/* --- MODAL --- */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+.modal-content { background: #24243e; padding: 30px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); width: 90%; max-width: 400px; }
+
+/* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 768px) {
+    nav { flex-direction: column; padding: 15px; }
+    nav ul { margin-top: 15px; gap: 10px; font-size: 0.8rem; }
+    
+    #home h1 { font-size: 2.5rem; }
+    .section-title { font-size: 2rem; }
+    
+    .about-content { flex-direction: column; text-align: center; }
+    .about-text { text-align: center; }
+    
+    section { padding: 60px 15px; min-height: auto; } /* Mobile par height content ke hisab se */
+    #home { min-height: 100vh; } /* Home screen full rahe */
+}

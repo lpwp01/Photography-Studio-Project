@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Book Now</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+    
+<div class="bg-blob blob-1"></div><div class="bg-blob blob-2"></div><div class="bg-blob blob-3"></div>
+<nav>
+    <div class="logo">📸 Semal Studio</div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="booking.html">Book Now</a></li>
+    </ul>
+</nav>
+
+    <div class="container">
+        <div class="form-box">
+            <h2 style="text-align: center; margin-bottom: 20px;">📅 Book Your Date</h2>
+            <form id="bookingForm">
+                <label>Name</label><input type="text" id="name" required>
+                <label>Mobile</label><input type="tel" id="mobile" required>
+                <label>Event Date</label><input type="date" id="event_date" required>
+                <label>Event Type</label>
+                <select id="event_type">
+                    <option>Wedding</option><option>Engagement</option><option>Birthday</option><option>Pre-Wedding</option>
+                </select>
+                <label>Package</label><input type="text" id="package" placeholder="Select from Packages page">
+                <button type="button" class="btn-3d" style="width:100%; margin-top:20px;" onclick="showOtp()">Proceed to Verify</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- OTP Modal -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <h3>🔐 Enter OTP</h3>
+            <p>Enter 0773 to confirm booking</p>
+            <input type="text" id="otpInput" maxlength="4" style="text-align:center; font-size:2rem; letter-spacing:10px;">
+            <p id="error" style="color:red; display:none;">Wrong OTP!</p>
+            <button class="btn-3d" onclick="verifyOtp()">Confirm</button>
+            <button class="btn-3d" style="background:grey; margin-top:10px;" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+    <script src="js/booking.js"></script>
+    <script src="js/otp.js"></script>
+</body>
+</html>

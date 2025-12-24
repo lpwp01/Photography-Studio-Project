@@ -1,0 +1,34 @@
+# ========================
+# Python Backend
+# ========================
+__pycache__/
+*.pyc
+*.pyo
+*.bak
+
+# Logs
+backend/*.log
+
+# Database
+backend/database/*.db
+
+# Environment
+.env
+
+# ========================
+# Node.js Frontend
+# ========================
+frontend/node_modules/
+npm-debug.log*
+yarn-error.log*
+frontend/*.log
+frontend/.env
+
+# ========================
+# OS / Editor junk
+# ========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

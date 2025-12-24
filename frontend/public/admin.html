@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+    <nav>
+        <div class="logo">👨‍💻 Admin Panel</div>
+        <a href="index.html">Logout</a>
+    </nav>
+    <div class="container" style="padding: 50px;">
+        <h2 class="section-title">All Bookings</h2>
+        <div style="overflow-x:auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                <thead>
+                    <tr style="background: rgba(255,255,255,0.1);">
+                        <th style="padding: 15px;">ID</th>
+                        <th style="padding: 15px;">Name</th>
+                        <th style="padding: 15px;">Mobile</th>
+                        <th style="padding: 15px;">Event</th>
+                        <th style="padding: 15px;">Date</th>
+                        <th style="padding: 15px;">Package</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTable"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        fetch("http://localhost:5000/api/admin/bookings")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('adminTable').innerHTML = data.map(b => `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 15px;">${b.id}</td>
+                    <td style="padding: 15px;">${b.name}</td>
+                    <td style="padding: 15px;">${b.mobile}</td>
+                    <td style="padding: 15px;">${b.event_type}</td>
+                    <td style="padding: 15px;">${b.event_date}</td>
+                    <td style="padding: 15px;">${b.package}</td>
+                </tr>
+            `).join('');
+        });
+    </script>
+</body>
+</html>

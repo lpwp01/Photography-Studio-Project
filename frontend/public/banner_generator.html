@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Banner Generator</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <!-- JS Libraries (Internet Required) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            background: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- CONTROL PANEL --- */
+        .controls {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        input {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-gen { background: #00d2ff; color: black; }
+        .btn-down { background: #ff00cc; color: white; }
+        .btn-gen:hover, .btn-down:hover { transform: scale(1.05); }
+
+        /* --- BANNER DESIGN (A4 RATIO) --- */
+        #banner-area {
+            width: 800px;  /* Width fixed for High Quality */
+            height: 1200px; /* Poster Height */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 40px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+
+        /* Background Blobs (CSS Generated for capturing) */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        .b1 { top: -100px; left: -100px; width: 500px; height: 500px; background: #ff00cc; }
+        .b2 { bottom: -100px; right: -100px; width: 600px; height: 600px; background: #333399; }
+        .b3 { top: 40%; left: 30%; width: 400px; height: 400px; background: #00d2ff; opacity: 0.4; }
+
+        /* Banner Content */
+        .content { z-index: 2; text-align: center; width: 100%; }
+        
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .tagline { font-size: 1.8rem; color: #ddd; letter-spacing: 2px; margin-bottom: 40px; }
+
+        /* QR Section */
+        .qr-frame {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 50px;
+        }
+        #qrcode {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Packages Grid on Banner */
+        .plans-title { font-size: 2rem; color: white; margin-bottom: 20px; border-bottom: 3px solid #ff00cc; display: inline-block; }
+        
+        .plans-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .plan-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 20px;
+            width: 30%;
+            text-align: left;
+        }
+        .plan-card h3 { font-size: 1.5rem; color: #00d2ff; margin-bottom: 5px; }
+        .plan-card h2 { font-size: 2rem; margin-bottom: 10px; }
+        .plan-card p { font-size: 0.9rem; color: #ccc; line-height: 1.4; }
+
+        /* Footer */
+        .footer {
+            z-index: 2;
+            background: rgba(0,0,0,0.3);
+            width: 100%;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .scan-msg { color: #ff00cc; text-transform: uppercase; animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- CONTROL PANEL -->
+    <div class="controls">
+        <input type="text" id="urlInput" placeholder="Enter URL (e.g., bit.ly/semal-studio)">
+        <button class="btn-gen" onclick="generateBanner()">🔄 Update QR</button>
+        <button class="btn-down" onclick="downloadBanner()">⬇️ Download Image</button>
+    </div>
+
+    <!-- BANNER PREVIEW AREA -->
+    <div id="banner-area">
+        <!-- Backgrounds -->
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+
+        <!-- Header -->
+        <div class="content">
+            <h1>Semal Bhargava<br>Studio</h1>
+            <div class="tagline">Premium Photography & Videography</div>
+        </div>
+
+        <!-- QR Code -->
+        <div class="content">
+            <div class="qr-frame">
+                <div id="qrcode"></div> <!-- QR Generates Here -->
+            </div>
+            <div class="scan-msg">Scan to Book Online</div>
+        </div>
+
+        <!-- Plans Section -->
+        <div class="content">
+            <div class="plans-title">Our Best Packages</div>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3>Bronze</h3>
+                    <h2>₹15k</h2>
+                    <p>• 4 Hrs Coverage<br>• 50 Edited Photos<br>• Traditional Shoot</p>
+                </div>
+                <div class="plan-card" style="border-color: #00d2ff; background: rgba(0, 210, 255, 0.1);">
+                    <h3>Silver</h3>
+                    <h2>₹35k</h2>
+                    <p>• Full Day<br>• Photo + Video<br>• Cinematic Teaser</p>
+                </div>
+                <div class="plan-card">
+                    <h3>Gold</h3>
+                    <h2>₹75k</h2>
+                    <p>• Drone Shoot<br>• Cinematic Film<br>• Luxury Album</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span>📞 +91 8303441564</span>
+            <span>📍 Semal Studio</span>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. Initial QR Generation
+        window.onload = function() {
+            makeQR("https://localhost:3000"); // Default
+        };
+
+        // 2. Function to Make QR
+        function makeQR(url) {
+            document.getElementById("qrcode").innerHTML = ""; // Clear old
+            new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 250,
+                height: 250,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        // 3. Update Button Logic
+        function generateBanner() {
+            const url = document.getElementById('urlInput').value;
+            if(url) {
+                makeQR(url);
+                alert("QR Code Updated!");
+            } else {
+                alert("Please enter a URL first.");
+            }
+        }
+
+        // 4. Download Logic (High Quality)
+        function downloadBanner() {
+            const banner = document.getElementById("banner-area");
+            
+            // html2canvas options for better quality
+            html2canvas(banner, {
+                scale: 2, // 2x Resolution for crisp text
+                useCORS: true, // Allow images to load
+                backgroundColor: null // Keep transparency if any
+            }).then(canvas => {
+                // Create a fake link to trigger download
+                const link = document.createElement('a');
+                link.download = 'Semal_Studio_Banner.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
